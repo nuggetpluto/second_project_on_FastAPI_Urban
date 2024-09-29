@@ -1,5 +1,3 @@
-# taskmanager/schemas/schemas.py
-
 from pydantic import BaseModel
 
 

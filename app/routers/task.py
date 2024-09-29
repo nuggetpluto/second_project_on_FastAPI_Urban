@@ -1,5 +1,3 @@
-# taskmanager/routers/task.py
-
 from fastapi import APIRouter
 
 router = APIRouter(
