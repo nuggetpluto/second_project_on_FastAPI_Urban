@@ -9,6 +9,7 @@ app = FastAPI()
 app.include_router(task.router)
 app.include_router(user.router)
 
+
 # Базовый маршрут
 @app.get("/")
 async def root():
