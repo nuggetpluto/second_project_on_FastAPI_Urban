@@ -1,31 +1,94 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.orm import Session
+from sqlalchemy import insert, select, update, delete
+from typing import Annotated
+from slugify import slugify
 
-router = APIRouter(
-    prefix="/user",
-    tags=["user"]
-)
+# Импортируем локальные модули
+from app.backend.db import SessionLocal
+from app.schemas import CreateUser, UpdateUser
+from app.models import User
+
+# Создание маршрутизатора
+router = APIRouter()
 
 
+# Функция для подключения к БД
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+# Функция 1: Получение всех пользователей
 @router.get("/")
-async def all_users():
-    pass
+async def all_users(db: Annotated[Session, Depends(get_db)]):
+    # Получение всех пользователей из базы данных
+    users = db.scalars(select(User)).all()
+    return users
 
 
+# Функция 2: Получение пользователя по ID
 @router.get("/{user_id}")
-async def user_by_id(user_id: int):
-    pass
+async def user_by_id(user_id: int, db: Annotated[Session, Depends(get_db)]):
+    # Поиск пользователя в базе данных по ID
+    user = db.scalar(select(User).where(User.id == user_id))
+    if user:
+        return user
+    else:
+        # Если пользователь не найден, возвращаем ошибку 404
+        raise HTTPException(status_code=404, detail="User was not found")
 
 
+# Функция 3: Создание нового пользователя
 @router.post("/create")
-async def create_user():
-    pass
+async def create_user(new_user: CreateUser, db: Annotated[Session, Depends(get_db)]):
+    # Генерация slug из username
+    slug = slugify(new_user.username)
+    # Вставка нового пользователя в таблицу
+    stmt = insert(User).values(
+        username=new_user.username,
+        firstname=new_user.firstname,
+        lastname=new_user.lastname,
+        age=new_user.age,
+        slug=slug
+    )
+    db.execute(stmt)
+    db.commit()
+    return {'status_code': status.HTTP_201_CREATED, 'transaction': 'Successful'}
 
 
-@router.put("/update")
-async def update_user():
-    pass
+# Функция 4: Обновление пользователя
+@router.put("/update/{user_id}")
+async def update_user(user_id: int, update_data: UpdateUser, db: Annotated[Session, Depends(get_db)]):
+    # Проверяем, существует ли пользователь с данным user_id
+    user = db.scalar(select(User).where(User.id == user_id))
+    if user:
+        # Обновление данных пользователя
+        stmt = update(User).where(User.id == user_id).values(
+            firstname=update_data.firstname,
+            lastname=update_data.lastname,
+            age=update_data.age
+        )
+        db.execute(stmt)
+        db.commit()
+        return {'status_code': status.HTTP_200_OK, 'transaction': 'User update is successful!'}
+    else:
+        raise HTTPException(status_code=404, detail="User was not found")
 
 
-@router.delete("/delete")
-async def delete_user():
-    pass
+# Функция 5: Удаление пользователя
+@router.delete("/delete/{user_id}")
+async def delete_user(user_id: int, db: Annotated[Session, Depends(get_db)]):
+    # Проверка на наличие пользователя с данным ID
+    user = db.scalar(select(User).where(User.id == user_id))
+    if user:
+        # Удаление пользователя
+        stmt = delete(User).where(User.id == user_id)
+        db.execute(stmt)
+        db.commit()
+        return {'status_code': status.HTTP_200_OK, 'transaction': 'User deletion is successful!'}
+    else:
+        raise HTTPException(status_code=404, detail="User was not found")

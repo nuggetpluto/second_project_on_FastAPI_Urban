@@ -4,16 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="952b6e48-ab20-447b-9a26-cc17d0f162a0" name="Changes" comment="Миграции. Библиотека alembic.">
-      <change afterPath="$PROJECT_DIR$/.idea/FastAPI_roject_2_For_Urban.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/migrations/versions/d9609acdafb8_initial_migration_with_tables.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/migrations/versions/9aa79ccb8858_initial_migration.py" beforeDir="false" />
+    <list default="true" id="952b6e48-ab20-447b-9a26-cc17d0f162a0" name="Changes" comment="Миграции. Библиотека alembic.(исправил)">
+      <change afterPath="$PROJECT_DIR$/app/backend/db_depends.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/task.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/task.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routers/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routers/user.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/taskmanager.db" beforeDir="false" afterPath="$PROJECT_DIR$/taskmanager.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -204,13 +200,22 @@
       <option name="project" value="LOCAL" />
       <updated>1727621554862</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Миграции. Библиотека alembic.(исправил)">
+      <option name="closed" value="true" />
+      <created>1728213341945</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1728213341945</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Структура проекта. Маршруты и модели Pydantic." />
     <MESSAGE value="Модели SQLALchemy. Отношения между таблицами." />
     <MESSAGE value="Миграции. Библиотека alembic." />
-    <option name="LAST_COMMIT_MESSAGE" value="Миграции. Библиотека alembic." />
+    <MESSAGE value="Миграции. Библиотека alembic.(исправил)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Миграции. Библиотека alembic.(исправил)" />
   </component>
 </project>
