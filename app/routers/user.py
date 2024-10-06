@@ -7,7 +7,7 @@ from slugify import slugify
 # Импортируем локальные модули
 from app.backend.db import SessionLocal
 from app.schemas import CreateUser, UpdateUser
-from app.models import User
+from app.models import User, Task
 
 # Создание маршрутизатора
 router = APIRouter()
@@ -79,16 +79,26 @@ async def update_user(user_id: int, update_data: UpdateUser, db: Annotated[Sessi
         raise HTTPException(status_code=404, detail="User was not found")
 
 
-# Функция 5: Удаление пользователя
 @router.delete("/delete/{user_id}")
 async def delete_user(user_id: int, db: Annotated[Session, Depends(get_db)]):
-    # Проверка на наличие пользователя с данным ID
     user = db.scalar(select(User).where(User.id == user_id))
     if user:
+        # Удаление всех задач пользователя перед удалением самого пользователя
+        db.execute(delete(Task).where(Task.user_id == user_id))
         # Удаление пользователя
-        stmt = delete(User).where(User.id == user_id)
-        db.execute(stmt)
+        db.execute(delete(User).where(User.id == user_id))
         db.commit()
-        return {'status_code': status.HTTP_200_OK, 'transaction': 'User deletion is successful!'}
+        return {'status_code': status.HTTP_200_OK, 'transaction': 'User and related tasks are deleted successfully!'}
     else:
         raise HTTPException(status_code=404, detail="User was not found")
+
+
+# Новый маршрут для получения задач пользователя по ID
+@router.get("/{user_id}/tasks")
+async def tasks_by_user_id(user_id: int, db: Annotated[Session, Depends(get_db)]):
+    user = db.scalar(select(User).where(User.id == user_id))
+    if not user:
+        raise HTTPException(status_code=404, detail="User was not found")
+
+    tasks = db.scalars(select(Task).where(Task.user_id == user_id)).all()
+    return tasks
