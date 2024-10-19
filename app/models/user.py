@@ -1,10 +1,6 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
-from app.backend.db import Base  # Изменен путь импорта
-
-from sqlalchemy import Column, Integer, String
-from sqlalchemy.orm import relationship
-from app.backend.db import Base
+from backend.db import Base
 
 
 class User(Base):

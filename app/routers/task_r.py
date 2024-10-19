@@ -4,9 +4,9 @@ from sqlalchemy import insert, select, update, delete
 from typing import Annotated
 
 # Импортируем локальные модули и схемы
-from app.backend.db_depends import get_db
-from app.schemas import CreateTask, UpdateTask
-from app.models import Task, User
+from backend.db_depends import get_db
+from schemas import CreateTask, UpdateTask
+from models import Task, User
 
 # Создание маршрутизатора
 router = APIRouter()

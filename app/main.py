@@ -1,12 +1,12 @@
 from fastapi import FastAPI
-from app.backend.db import engine, Base
-from app.routers import task, user
+from backend.db import engine, Base
+from routers import task_r, user_r
 
 app = FastAPI()
 
 # Подключение маршрутов
-app.include_router(user.router, prefix="/users", tags=["Users"])
-app.include_router(task.router, prefix="/tasks", tags=["Tasks"])  # Подключаем маршруты задач
+app.include_router(user_r.router, prefix="/users", tags=["Users"])
+app.include_router(task_r.router, prefix="/tasks", tags=["Tasks"])  # Подключаем маршруты задач
 
 
 @app.get("/")

@@ -1,14 +1,10 @@
-# app/models/task.py
+# app/models/task_r.py
 
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
-from sqlalchemy.orm import relationship
-from app.backend.db import Base
-from app.models.user import User
+from models.user import User
 from sqlalchemy.schema import CreateTable
-
-from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
-from app.backend.db import Base
+from backend.db import Base
 
 
 class Task(Base):
@@ -19,10 +15,9 @@ class Task(Base):
     content = Column(String)
     priority = Column(Integer)
     completed = Column(Boolean)
-    user_id = Column(Integer, ForeignKey("users.id"))
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)  # Добавлен индекс и nullable=False
     slug = Column(String, unique=True)
 
-    # Обратная связь на пользователя
     user = relationship("User", back_populates="tasks")
 
 

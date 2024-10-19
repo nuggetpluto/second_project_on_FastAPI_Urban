@@ -5,9 +5,9 @@ from typing import Annotated
 from slugify import slugify
 
 # Импортируем локальные модули
-from app.backend.db import SessionLocal
-from app.schemas import CreateUser, UpdateUser
-from app.models import User, Task
+from backend.db import SessionLocal
+from schemas import CreateUser, UpdateUser
+from models import User, Task
 
 # Создание маршрутизатора
 router = APIRouter()
